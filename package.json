@@ -1,0 +1,19 @@
+{
+  "name": "test-plans-generator",
+  "version": "0.0.1",
+  "description": "generates test plans via a standard format. outputs markdown. add or edit capability.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kate Green",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "fs": "0.0.2",
+    "http": "0.0.0"
+  },
+  "devDependencies": {
+    "reload": "^0.4.0"
+  }
+}
