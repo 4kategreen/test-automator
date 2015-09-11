@@ -1,0 +1,9 @@
+html
+  head
+    title!= 'title'
+  body
+    h1!= 'Page Title'
+    each file in files
+      ul
+        each val, index in file
+          li= index + ': ' + val
