@@ -17,7 +17,6 @@ app.get('/', function(req,res) {
   fileEdit.getDirectoryList('.')
     .then(fileEdit.parseDirectory)
     .then(function(files) {
-      console.log(files);
       res.render('main', { files: files });
     })
     .fail(function(err) {

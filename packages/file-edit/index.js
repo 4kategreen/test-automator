@@ -20,18 +20,22 @@ FileEdit.prototype.getDirectoryList = function getDirectoryList(path) {
   return deferred.promise;
 };
 
+// This has to return _after_ all the promises are done.
 FileEdit.prototype.parseDirectory = function parseDirectory(files) {
   var _this = this;
+  _this.structure = [];
 
   for (var i=0;i<files.length;i++) {
-    setFileAttrs(files[i]).then(function(file) {
-      _this.structure.push(file);
-    }).catch(function(err)  {
-      console.log('Error: ' + err);
-    }).done();
+    setFileAttrs(files[i])
+      .then(function(file) {
+        _this.structure.push(file);
+      })
+      .catch(function(err)  {
+        console.log('Error: ' + err);
+      })
+      .done();
   }
 
-  console.log(_this.structure);
   return _this.structure;
 };
 
