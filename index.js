@@ -1,5 +1,5 @@
 var express = require('express'),
-    fileEdit = require('file-edit'),
+    fileEdit = require('./packages/file-edit/index'),
     http = require('http'),
     path = require('path'),
     reload = require('reload');
