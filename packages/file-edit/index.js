@@ -36,6 +36,20 @@ FileEdit.prototype.parseDirectory = function parseDirectory(files) {
   return files.filter(filterBadTypes);
 };
 
+FileEdit.prototype.readFile = function readFile(file) {
+  var deferred = Q.defer();
+
+  fs.readFile(file, function(err,data) {
+    if (err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(data);
+    }
+  });
+
+  return deferred.promise;
+}
+
 var setFileAttrs = function setFileAttrs(files) {
   var results = [],
       type;

@@ -26,7 +26,11 @@ app.get('/', function(req,res) {
 });
 
 app.get('/file/:file', function(req,res) {
-  res.send('file: ' + req.params.file);
+  fileEdit.readFile(req.params.file)
+    .then(function(content) {
+      res.render('file-edit', { content: content, file: req.params.file });
+    })
+    .done();
 })
 
 var waitForServer = true;
