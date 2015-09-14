@@ -22,9 +22,18 @@ FileEdit.prototype.getDirectoryList = function getDirectoryList(path) {
 
 // This has to return _after_ all the promises are done.
 FileEdit.prototype.parseDirectory = function parseDirectory(files) {
-  var structure = [];
+  files = setFileAttrs(files);
 
-  return setFileAttrs(files);
+  var filterBadTypes = function(obj) {
+    var goodType = false;
+    if ('type' in obj && (obj.type === 'file' || obj.type === 'directory')) {
+      goodType = true;
+    }
+
+    return goodType;
+  }
+
+  return files.filter(filterBadTypes);
 };
 
 var setFileAttrs = function setFileAttrs(files) {
@@ -37,10 +46,12 @@ var setFileAttrs = function setFileAttrs(files) {
 
     fileAttrs = fs.statSync(fileName);
 
-    if (fileAttrs.isFile()) {
-      type = "file";
+    if (fileName.substring(0,1) === '.') {
+      type = "hidden";
     } else if (fileAttrs.isDirectory()) {
       type = "directory";
+    } else if (fileAttrs.isFile()) {
+      type = "file";
     } else {
       type = "unknown";
     }
