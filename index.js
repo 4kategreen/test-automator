@@ -25,6 +25,10 @@ app.get('/', function(req,res) {
     .done();
 });
 
+app.get('/file/:file', function(req,res) {
+  res.send('file: ' + req.params.file);
+})
+
 var waitForServer = true;
 reload(server,app, waitForServer);
 

@@ -5,5 +5,5 @@ html
     h1!= 'Page Title'
     each file in files
       ul
-        each val, index in file
-          li= index + ': ' + val
+        li
+          a(href=file.type + '/' + file.name)= file.name
