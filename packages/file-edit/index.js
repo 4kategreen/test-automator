@@ -22,45 +22,36 @@ FileEdit.prototype.getDirectoryList = function getDirectoryList(path) {
 
 // This has to return _after_ all the promises are done.
 FileEdit.prototype.parseDirectory = function parseDirectory(files) {
-  var _this = this;
-  _this.structure = [];
+  var structure = [];
 
-  for (var i=0;i<files.length;i++) {
-    setFileAttrs(files[i])
-      .then(function(file) {
-        _this.structure.push(file);
-      })
-      .catch(function(err)  {
-        console.log('Error: ' + err);
-      })
-      .done();
-  }
-
-  return _this.structure;
+  return setFileAttrs(files);
 };
 
-var setFileAttrs = function setFileAttrs(file) {
-  var deferred = Q.defer(),
+var setFileAttrs = function setFileAttrs(files) {
+  var results = [],
       type;
 
-  fs.stat(file,function(err,stat) {
-    if (stat.isFile()) {
+  for (var i=0;i<files.length;i++) {
+    var fileName = files[i],
+        fileAttrs;
+
+    fileAttrs = fs.statSync(fileName);
+
+    if (fileAttrs.isFile()) {
       type = "file";
-    } else if (stat.isDirectory()) {
+    } else if (fileAttrs.isDirectory()) {
       type = "directory";
     } else {
       type = "unknown";
     }
 
-    fileAttrs = {
-      name: file,
+    results.push({
+      name: fileName,
       type: type
-    }
+    });
+  }
 
-    deferred.resolve(fileAttrs);
-  });
-
-  return deferred.promise;
+  return results;
 };
 
 module.exports = new FileEdit();
